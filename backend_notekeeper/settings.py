@@ -27,6 +27,7 @@ DB_NAME = config('DB_NAME')
 DB_USER=config('DB_USER')
 PASSWORD=config('PASSWORD')
 HOST=config('HOST')
+PORT=config("PORT")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -90,11 +91,11 @@ WSGI_APPLICATION = 'backend_notekeeper.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "notekeeperdb",
-        "USER": "postgres",
-        "PASSWORD": "lakshmi",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": PASSWORD,
+        "HOST": HOST,
+        "PORT": PORT,
     }
 }
 # Password validation

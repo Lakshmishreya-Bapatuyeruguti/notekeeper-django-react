@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.db import transaction
+from django.db.models import Count
 
 # api for viewing all notes
 @api_view(['GET'])
@@ -54,5 +55,23 @@ def delete_note(request, pk):
     
     return Response(status=status.HTTP_204_NO_CONTENT)
     
+# Fetch the detailed notes for each owner
+ 
+@api_view(['GET'])
+def all_notes_by_owner(request):
+    try:
     
-    
+        queryset = Notes.objects.values('owner').annotate(note_count=Count('id'))
+
+        
+        for entry in queryset:
+            notes = Notes.objects.filter(owner=entry['owner']).values('id', 'title', 'created_at', 'updated_at')
+            if notes.exists():
+                entry['notes'] = notes
+            else:
+                entry['notes'] = []      
+        return Response(queryset, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
