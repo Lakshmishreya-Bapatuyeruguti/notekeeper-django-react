@@ -9,22 +9,19 @@ from django.db import transaction
 # api for viewing all notes
 @api_view(['GET'])
 def all_notes(request):
-     
-    # checking for the parameters from the URL
-    notes = Notes.objects.all()
-    if notes.exists():
+    try:
+        notes = Notes.objects.all()
         serializer = NotesSerializer(notes, many=True)
-        return Response(serializer.data)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response( status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 # api for creating note
+
 @api_view(['POST'])
 def create_note(request):
     serializer = NotesSerializer(data=request.data)
-    created = Notes.objects.get_or_create(id=request.data.get('id'))
-    if not created:
-        raise serializers.ValidationError('A note with this id already exists')
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
