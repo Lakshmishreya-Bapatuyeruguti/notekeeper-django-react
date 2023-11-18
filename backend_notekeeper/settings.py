@@ -35,6 +35,8 @@ PORT=config("PORT")
 
 
  # If you want to allow all origins
+ 
+ALLOWED_HOSTS=["*"]
 
 INSTALLED_APPS = [
     
