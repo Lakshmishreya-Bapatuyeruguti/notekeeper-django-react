@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
+
   return (
     <nav className="bg-blue-900 p-4">
       <div className="container mx-auto flex items-center justify-between">
@@ -22,7 +23,6 @@ const Navbar = () => {
             className="text-gray-200 cursor-pointer"
             onClick={() => navigate("/notes")}
           >
-            {" "}
             View Notes
           </h1>
           <h1

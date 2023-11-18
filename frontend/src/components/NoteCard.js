@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import axios from "axios";
+import { baseBackendUrl } from "../utils/helpers";
 
 function NoteCard({ details, handler }) {
   const inputRef = useRef(null);
@@ -15,32 +16,37 @@ function NoteCard({ details, handler }) {
     details.description
   );
   const [isEditing, setIsEditing] = useState(false);
+
+  // To Handle Update Request
   const handleUpdate = async (id) => {
     try {
       setIsEditing(false);
-      const response = await axios.put(
-        `http://127.0.0.1:8000/api/update/${id}/`,
-        {
-          title: updatedTitle,
-          description: updatedDescription,
-        }
-      );
-      const data = await response.data;
-
-      console.log(data);
-    } catch (error) {}
+      await axios.put(`${baseBackendUrl}update/${id}/`, {
+        title: updatedTitle,
+        description: updatedDescription,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // To Handle Delete Request
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/delete/${id}/`);
+      await axios.delete(`${baseBackendUrl}delete/${id}/`);
       handler(id);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // To Handle Input Focus while editing
   useEffect(() => {
     if (isEditing) {
       inputRef.current.focus();
     }
   }, [isEditing]);
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       <Accordion>

@@ -4,16 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotesList from "./screens/NotesList";
 import NoteMaking from "./screens/NoteMaking";
 import { createContext, useState } from "react";
+import Landing from "./screens/Landing";
 export const AppContext = createContext();
 function App() {
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState("");
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="flex flex-col h-screen justify-between ">
       <AppContext.Provider value={{ notes, setNotes, user, setUser }}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/notes" element={<NotesList />} />
             <Route path="/notemaking" element={<NoteMaking />} />
           </Routes>
