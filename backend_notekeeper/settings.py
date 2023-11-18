@@ -89,14 +89,15 @@ WSGI_APPLICATION = 'backend_notekeeper.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": DB_NAME,
-        "USER": DB_USER,
-        "PASSWORD": PASSWORD,
-        "HOST": HOST,
-        "PORT": PORT,
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': DB_NAME,
+    'USER': DB_USER,
+    'PASSWORD':PASSWORD,
+    'HOST': HOST,
+    'PORT': PORT,
+    'OPTIONS': {'sslmode': 'require'},
+  }
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
